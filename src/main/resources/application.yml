@@ -1,0 +1,39 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+        - id: STUDENT-SERVICE
+          uri: lb://STUDENT-SERVICE
+          predicates:
+            - Path=/student/**
+
+        - id: COURSE-SERVICE
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path=/course/**
+  config:
+    import: optional:configserver:http://localhost:8086
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8080/eureka
+
+#okta Configuration for API Gateway
+#okta:
+ #  issuer: https://dev-76892534.okta.com/oauth2/default
+ #   audience: api://default
+  #  client-id: 0oa8gd3kf5h7bjAbb5d7
+   # client-secret: ryWeSLlwmYqUYU3RW_opJ_Vly0OFOP51GtFXT83c
+    #scopes: openid, profile, email, offline_access
+
